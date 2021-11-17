@@ -10,8 +10,11 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Simulation workshop
+      title: Core
       url: core.html
+    - output: web,pdf
+      title: Simulating an experiment
+      url: simulation.html
     output: web
     title: simulation_workshop
   output: web
