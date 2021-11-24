@@ -1,0 +1,138 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+CK = c(0, 0)
+```
+
+```{r}
+beta = 3 # inverse temperature (exploration)
+p = exp(CK*beta) / sum(exp(CK*beta))
+p
+```
+
+```{r}
+choose = function(p){
+    chosen_action = NA
+    rand = runif(1, min=0, max=1) # Choses float from continuous uniform distribution between 0 and 1
+    if(rand < p[1]){ # If our random number is smaller than our first p
+        chosen_action = 0} # ...return index of first action
+    else{
+        chosen_action = 1}
+    return(chosen_action)
+}
+action = choose(p)
+print(paste0("We chose action ", action))
+
+```
+
+```{r}
+mu = c(.2,.8) # Mu are the reward probabilities for each action defined by the game
+reward = runif(1, min=0, max=1) < mu[action+1]
+```
+
+```{r}
+alpha = .1
+#updating CK values
+CK = (1 - alpha)*CK 
+CK[action+1] = CK[action+1] + alpha * 1
+```
+
+```{r}
+simulate_M4ChoiceKernel_v1 = function(Tr, mu, alpha, beta){
+    CK = c(0, 0) # CK are the CK-values the participant currently holds for each action
+    CKs = NULL
+    actions = NULL # the participants actions
+    rewards = NULL # the rewards received by the participant
+    # Looping through trials
+    for(t in c(1:Tr)){ 
+        CKs=c(CKs, CK)
+        p = exp(beta*CK)/sum(exp(beta*CK)) # The probability with which a participant choses each action
+        action = choose(p) # The choice of the participant based on the choice probabilities
+        actions=c(actions,action) 
+        reward = runif(1) < mu[action+1] # The reward determined by the game for the action the participant chose
+        rewards=c(rewards,(as.integer(reward)))
+        CK = (1 - alpha)*CK 
+        CK[action+1] = CK[action+1] + alpha * 1
+        
+        
+        #delta = reward - CK[action+1] # prediction error
+        #deltas=c(deltas,delta)
+        #CK[action+1] = CK[action+1] + alpha * delta
+    }
+    return(list(actions, rewards, CKs))
+}
+
+## Game parameters
+Tr = 10 # number of trials
+mu = c(.2,.8) # reward probabilities
+
+## Participant parameters
+alpha = .1 # learning rate
+beta = 3 # inverse temperature
+
+
+#
+sim_list = simulate_M4ChoiceKernel_v1(Tr, mu, alpha, beta)
+# actions, rewards, CKs
+
+actions = sim_list[[1]]
+rewards = sim_list[[2]]
+CKs = sim_list[[3]]
+```
+
+```{r}
+library(ggplot2)
+plot_game = function(Tr, mu, alpha, beta){
+  sim_list = simulate_M4ChoiceKernel_v1(Tr, mu, alpha, beta)
+
+  actions = sim_list[[1]]
+  rewards = sim_list[[2]]
+  CKs = sim_list[[3]]
+  type = rep(c("CK1", "CK2"),length(CKs)/2)
+  df_CKs = data.frame(values=CKs, type, trial = rep(c(1:Tr),each = 2))
+  df_action = data.frame(values = actions, type = "choices", trial = c(1:Tr))
+  df = rbind(df_CKs, df_action)
+  plot = ggplot(df_CKs, aes(x = trial, y = values, group = type, color = type))+geom_line()+
+    ylim(0,1)+theme_classic()
+  plot=plot+geom_point(data = df_action)
+  return(plot)
+}
+
+Tr = 1000 # number of trials
+mu = c(.2,.8) # reward probabilities
+alpha = .1 # learning rate
+beta = 3 # inverse temperature
+plot_game(Tr, mu, alpha, beta)
+```
+```{r}
+Tr = 100 # number of trials
+mu = c(.2,.8) # reward probabilities
+alpha = .01 # learning rate
+beta = 4 # inverse temperature
+plot_game(Tr, mu, alpha, beta)
+```
+
+```{r}
+Tr = 1000 # number of trials
+mu = c(.2,.8) # reward probabilities
+alpha = .01 # learning rate
+beta = 4 # inverse temperature
+plot_game(Tr, mu, alpha, beta)
+```
+```{r}
+Tr = 1000 # number of trials
+mu = c(.2,.8) # reward probabilities
+alpha = .01 # learning rate
+beta = 1000 # inverse temperature
+plot_game(Tr, mu, alpha, beta)
+```
+```{r}
+Tr = 1000 # number of trials
+mu = c(.2,.8) # reward probabilities
+alpha = .1 # learning rate
+beta = 0.0000000001 # inverse temperature
+plot_game(Tr, mu, alpha, beta)
+```

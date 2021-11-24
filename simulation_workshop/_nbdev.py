@@ -2,7 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"choose": "01_simulation.ipynb",
+         "simulate_M3RescorlaWagner_v1": "01_simulation.ipynb",
+         "plot_rescorla_game": "01_simulation.ipynb",
+         "simulate_M4ChoiceKernel_v1": "01_simulation.ipynb",
+         "plot_choice_kernel_game": "01_simulation.ipynb"}
 
 modules = ["simulation.py"]
 

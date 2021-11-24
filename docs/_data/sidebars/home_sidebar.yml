@@ -15,6 +15,9 @@ entries:
     - output: web,pdf
       title: Simulating an experiment
       url: simulation.html
+    - output: web,pdf
+      title: Wilson Figure
+      url: wilson_figure.html
     output: web
     title: simulation_workshop
   output: web

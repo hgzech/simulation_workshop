@@ -1,0 +1,16 @@
+def simulate_M4ChoiceKernel_v1(T, mu, alpha_c, beta_c):
+    choice_kernel = c(0, 0) # choice_kernel are the choice_kernel-values the participant currently holds for each action
+    choice_kernels = []
+    actions = [] # the participants actions
+    rewards = [] # the rewards received by the participant
+    # Looping through trials
+    for t in range(T): 
+        choice_kernels.append(choice_kernel)
+        p = np.exp(beta_c*choice_kernel)/sum(exp(beta_c*choice_kernel)) # The probability with which a participant choses each action
+        action = choose(p) # The choice of the participant based on the choice probabilities
+        actions.append(action) 
+        reward = np.random.random() < mu[action] # The reward determined by the game for the action the participant chose
+        rewards.append(int(reward))
+        choice_kernel = (1 - alpha_c) * choice_kernel 
+        choice_kernel[action] = choice_kernel[action] + alpha_c * 1 # Stickiness  
+    return actions, rewards, choice_kernels
