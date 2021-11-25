@@ -48,7 +48,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's create people that can say their name.</p>
+<h2 id="A-(very)-simple-Person.">A (very) simple Person.<a class="anchor-link" href="#A-(very)-simple-Person."> </a></h2><p>Let's create people that can say their name.</p>
 
 </div>
 </div>
@@ -171,6 +171,19 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Our-first-&quot;learning&quot;-model">Our first "learning" model<a class="anchor-link" href="#Our-first-&quot;learning&quot;-model"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The random model is the easiest, it does not actually learn anything, but simply gives us equal choice probabilities for each possible actions.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -178,59 +191,17 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">():</span>
-    <span class="c1"># When combining models both update expected values and expected values from both are added into softmax (p = np.exp(Q*beta) / sum(np.exp(Q*beta))) functions (Q and choice kernel values are summed up)</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    p = np.exp(Q*beta + CK*beta_ck) / sum(np.exp(Q*beta + Q*beta + CK*beta_ck))</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">learning_model</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span> <span class="o">=</span> <span class="n">learning_model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span> <span class="o">=</span> <span class="kc">None</span>
-        
-    <span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hi, I&#39;m </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="o">%</span><span class="k">self</span>.name)
-        
-    <span class="k">def</span> <span class="nf">join_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">):</span>
-        <span class="n">experiment</span><span class="o">.</span><span class="n">sign_up_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span> <span class="o">=</span> <span class="n">experiment</span>
-        
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Experiment</span><span class="p">():</span>
-    <span class="c1"># e.g. multi-armed bandit as in the other example</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">RandomModel</span><span class="p">():</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">participants</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">pass</span>
     
-    <span class="k">def</span> <span class="nf">sign_up_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">participant</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">participants</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">participant</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_choice_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+        <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+            <span class="n">choice_probabilities</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">show_stimulus</span><span class="p">():</span>
-        <span class="k">pass</span>
-    
-    <span class="k">def</span> <span class="nf">show_feedback</span><span class="p">():</span>
-        <span class="k">pass</span>
-    
-    <span class="k">def</span> <span class="nf">record_response</span><span class="p">():</span>
-        <span class="k">pass</span>
-        
+        <span class="k">return</span> <span class="n">choice_probabilities</span>
 </pre></div>
 
     </div>
@@ -247,7 +218,9 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rando</span> <span class="o">=</span> <span class="n">RandomModel</span><span class="p">()</span>
+<span class="n">possible_actions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="n">rando</span><span class="o">.</span><span class="n">get_choice_probabilities</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -262,135 +235,9 @@ nb_path: "03_concrete_modelling.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;__main__.Person at 0x7fe9a0410ac0&gt;</pre>
+<pre>{&#39;a&#39;: 0.5, &#39;b&#39;: 0.5}</pre>
 </div>
 
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Paul&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="n">paul</span><span class="o">.</span><span class="n">say_hi</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Hi, I&#39;m Paul!
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">study_1</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
-<span class="n">paul</span><span class="o">.</span><span class="n">join_experiment</span><span class="p">(</span><span class="n">study_1</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">study_1</span><span class="o">.</span><span class="n">participants</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Paul
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">~/opt/miniconda3/envs/wp1/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, obj)</span>
-<span class="ansi-green-intense-fg ansi-bold">    700</span>                 type_pprinters<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>type_printers<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    701</span>                 deferred_pprinters=self.deferred_printers)
-<span class="ansi-green-fg">--&gt; 702</span><span class="ansi-red-fg">             </span>printer<span class="ansi-blue-fg">.</span>pretty<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    703</span>             printer<span class="ansi-blue-fg">.</span>flush<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    704</span>             <span class="ansi-green-fg">return</span> stream<span class="ansi-blue-fg">.</span>getvalue<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/opt/miniconda3/envs/wp1/lib/python3.8/site-packages/IPython/lib/pretty.py</span> in <span class="ansi-cyan-fg">pretty</span><span class="ansi-blue-fg">(self, obj)</span>
-<span class="ansi-green-intense-fg ansi-bold">    375</span>                 <span class="ansi-green-fg">if</span> cls <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>type_pprinters<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    376</span>                     <span class="ansi-red-fg"># printer registered in self.type_pprinters</span>
-<span class="ansi-green-fg">--&gt; 377</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>type_pprinters<span class="ansi-blue-fg">[</span>cls<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">,</span> cycle<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    378</span>                 <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    379</span>                     <span class="ansi-red-fg"># deferred printer</span>
-
-<span class="ansi-green-fg">~/opt/miniconda3/envs/wp1/lib/python3.8/site-packages/IPython/lib/pretty.py</span> in <span class="ansi-cyan-fg">inner</span><span class="ansi-blue-fg">(obj, p, cycle)</span>
-<span class="ansi-green-intense-fg ansi-bold">    553</span>                 p<span class="ansi-blue-fg">.</span>text<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;,&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    554</span>                 p<span class="ansi-blue-fg">.</span>breakable<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 555</span><span class="ansi-red-fg">             </span>p<span class="ansi-blue-fg">.</span>pretty<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    556</span>         <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">1</span> <span class="ansi-green-fg">and</span> type<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> tuple<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    557</span>             <span class="ansi-red-fg"># Special case for 1-item tuples.</span>
-
-<span class="ansi-green-fg">~/opt/miniconda3/envs/wp1/lib/python3.8/site-packages/IPython/lib/pretty.py</span> in <span class="ansi-cyan-fg">pretty</span><span class="ansi-blue-fg">(self, obj)</span>
-<span class="ansi-green-intense-fg ansi-bold">    392</span>                         <span class="ansi-green-fg">if</span> cls <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> object<span class="ansi-red-fg"> </span><span class="ansi-red-fg">\</span>
-<span class="ansi-green-intense-fg ansi-bold">    393</span>                                 <span class="ansi-green-fg">and</span> callable<span class="ansi-blue-fg">(</span>cls<span class="ansi-blue-fg">.</span>__dict__<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;__repr__&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 394</span><span class="ansi-red-fg">                             </span><span class="ansi-green-fg">return</span> _repr_pprint<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">,</span> cycle<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    395</span> 
-<span class="ansi-green-intense-fg ansi-bold">    396</span>             <span class="ansi-green-fg">return</span> _default_pprint<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">,</span> cycle<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/opt/miniconda3/envs/wp1/lib/python3.8/site-packages/IPython/lib/pretty.py</span> in <span class="ansi-cyan-fg">_repr_pprint</span><span class="ansi-blue-fg">(obj, p, cycle)</span>
-<span class="ansi-green-intense-fg ansi-bold">    698</span>     <span class="ansi-blue-fg">&#34;&#34;&#34;A pprint that just redirects to the normal repr function.&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    699</span>     <span class="ansi-red-fg"># Find newlines and replace them with p.break_()</span>
-<span class="ansi-green-fg">--&gt; 700</span><span class="ansi-red-fg">     </span>output <span class="ansi-blue-fg">=</span> repr<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    701</span>     lines <span class="ansi-blue-fg">=</span> output<span class="ansi-blue-fg">.</span>splitlines<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    702</span>     <span class="ansi-green-fg">with</span> p<span class="ansi-blue-fg">.</span>group<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">TypeError</span>: __repr__ returned non-string (type NoneType)</pre>
-</div>
 </div>
 
 </div>
@@ -401,7 +248,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To participate, they will also have to be able to make decisions.  Lets allow them to interact with experiments.</p>
+<p>Let's allow people to have learning models.</p>
 
 </div>
 </div>
@@ -413,9 +260,10 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Experiment</span><span class="p">():</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">set_learning_model</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="bp">self</span>
 </pre></div>
 
     </div>
@@ -432,14 +280,986 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
-<span class="k">def</span> <span class="nf">join_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">):</span>
-    
-    
-    
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span><span class="o">.</span><span class="n">set_learning_model</span><span class="p">(</span><span class="n">RandomModel</span><span class="p">())</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">paul</span><span class="o">.</span><span class="n">learning_model</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>__main__.RandomModel</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And to make choices based on these learning models.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">choose_action</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">possible_actions</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Note: This only works for two actions&#39;&#39;&#39;</span>
+    <span class="c1"># Getting choice probabilities from learning model</span>
+    <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span><span class="o">.</span><span class="n">get_choice_probabilities</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span>
+    <span class="c1"># Chosing action based on choice probabilities</span>
+    <span class="n">random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">random</span> <span class="o">&lt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">choice_probabilities</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">chosen_action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">choice_probabilities</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">chosen_action</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">choice_probabilities</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">chosen_action</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include warning.html content='This choice function only works for two actions.  Are there functions that work for more actions?' %}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Paul chooses an action.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;a&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Does Paul choose randomely?</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">paul</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.55</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Yes! :)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-more-complicated-model">A more complicated model<a class="anchor-link" href="#A-more-complicated-model"> </a></h2><h3 id="RescorlaWagnerModel">RescorlaWagnerModel<a class="anchor-link" href="#RescorlaWagnerModel"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">RescorlaWagnerModel</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span> <span class="c1"># A Rescorla-Wagner Model has a learning rate...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span> <span class="c1"># ...and an inverse temperature parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># It can memorize expected rewards but starts with no knowledge of the world</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span> <span class="o">=</span> <span class="n">RescorlaWagnerModel</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>A Rescorla-Wagner Model associates each action with an expected reward.  If it has not encountered a possible action, it assignes .5 to it (Note:Again this only seems to work for two actions).</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">get_expected_reward_for_action</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="c1"># If we haven&#39;t encountered the action, we set its expected reward to .5 and remember it</span>
+    <span class="k">if</span> <span class="n">action</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="mf">.5</span>
+    <span class="c1"># We return the expected reward associated with the action</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The model starts with no knowledge of the world.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It encounteres an action and sets it's expected reward to .5.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">get_expected_reward_for_action</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.5</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After encountering an action, the model remembers it's reward.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's write a function that can consider several actions at once:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">get_expected_rewards_for_possible_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+    <span class="n">expected_rewards</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
+        <span class="n">expected_rewards</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expected_reward_for_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">expected_rewards</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">get_expected_rewards_for_possible_actions</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;b&#39;: 0.5, &#39;c&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.5, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Based on the expected rewards, we can write the models choice function.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">get_choice_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+    <span class="n">expected_rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expected_rewards_for_possible_actions</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+    <span class="n">expected_reward_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected_rewards</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">expected_reward_values</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">expected_reward_values</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">))</span>
+    <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span><span class="n">choice_probabilities</span><span class="p">))</span> <span class="c1"># turning them into a dictionary</span>
+    <span class="k">return</span> <span class="n">choice_probabilities</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">get_choice_probabilities</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;b&#39;: 0.5, &#39;c&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now a person with a Rescorla Wagner Model should already be able to choose things.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Richard&#39;</span><span class="p">)</span>
+<span class="n">richard</span><span class="o">.</span><span class="n">set_learning_model</span><span class="p">(</span><span class="n">RescorlaWagnerModel</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">4</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;a&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this point the Rescorla Wagner Model acts the same as the random model.  This is because we have not given it the ability to learn (update it's expected reward values).  Therefore the values stay at their initial value .5.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's give the model the chance to learn by associating actions with rewards.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include warning.html content='For some reason rewards have to be between 0 and 1.' %}</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prediction_error</span> <span class="o">=</span> <span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expected_reward_for_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction_error</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.5, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resco</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.6, &#39;b&#39;: 0.5, &#39;c&#39;: 0.5}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For learning to occur, of course, the participant has to remember her last action (at least until receiving a reward):</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">choose_and_remember_action</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">possible_actions</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose_action</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_action</span> <span class="o">=</span> <span class="n">action</span>
+    <span class="k">return</span> <span class="n">action</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">choose_and_remember_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;b&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">last_action</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;b&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now when the person gets rewarded, the model can learn.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
+<span class="k">def</span> <span class="nf">get_rewarded</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span><span class="o">.</span><span class="n">learn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_action</span><span class="p">,</span> <span class="n">reward</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">get_rewarded</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">learning_model</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.5, &#39;b&#39;: 0.6}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">choose_and_remember_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;a&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+    <span class="n">richard</span><span class="o">.</span><span class="n">get_rewarded</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Jackpot!!!</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span><span class="o">.</span><span class="n">learning_model</span><span class="o">.</span><span class="n">expected_reward_memory</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;a&#39;: 0.9999999999999998, &#39;b&#39;: 0.6}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Richard should be pretty fond of a now.  Note that he still chooses a only in about 80% of the cases.  Could you imagine why?</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">richard</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.82</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
