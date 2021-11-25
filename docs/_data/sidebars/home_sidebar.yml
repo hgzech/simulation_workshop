@@ -19,7 +19,7 @@ entries:
       title: Wilson Figure
       url: wilson_figure.html
     - output: web,pdf
-      title: Title
+      title: A more concrete simulation
       url: concrete_modelling.html
     output: web
     title: simulation_workshop

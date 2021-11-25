@@ -1,13 +1,13 @@
 ---
 
-title: Title
+title: A more concrete simulation
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-
-
+summary: "In this notebook, we will we try to make the simulation a bit less abstract."
+description: "In this notebook, we will we try to make the simulation a bit less abstract."
 nb_path: "03_concrete_modelling.ipynb"
 ---
 <!--
@@ -48,7 +48,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-(very)-simple-Person.">A (very) simple Person.<a class="anchor-link" href="#A-(very)-simple-Person."> </a></h2><p>Let's create people that can say their name.</p>
+<h2 id="A-blue-print-for-a-(very)-simple-Person.">A blue print for a (very) simple Person.<a class="anchor-link" href="#A-blue-print-for-a-(very)-simple-Person."> </a></h2><blockquote><p>We create a person using a python class.  Classes are like blue prints that let us create concrete objects (or in this case persons).</p>
+</blockquote>
 
 </div>
 </div>
@@ -61,10 +62,13 @@ nb_path: "03_concrete_modelling.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;The blueprint of a very simple person&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="c1"># The person has a name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         
     <span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;And it can say hi&#39;&#39;&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hi, I&#39;m </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="o">%</span><span class="k">self</span>.name)
 </pre></div>
 
@@ -82,7 +86,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Paul&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adam</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Adam&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -99,24 +103,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">marie</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Marie&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span><span class="o">.</span><span class="n">say_hi</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adam</span><span class="o">.</span><span class="n">say_hi</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -129,38 +116,7 @@ nb_path: "03_concrete_modelling.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Hi, I&#39;m Paul!
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">marie</span><span class="o">.</span><span class="n">say_hi</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Hi, I&#39;m Marie!
+<pre>Hi, I&#39;m Adam!
 </pre>
 </div>
 </div>
@@ -173,13 +129,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Our-first-&quot;learning&quot;-model">Our first "learning" model<a class="anchor-link" href="#Our-first-&quot;learning&quot;-model"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The random model is the easiest, it does not actually learn anything, but simply gives us equal choice probabilities for each possible actions.</p>
+<h2 id="Our-first-&quot;learning&quot;-model">Our first "learning" model<a class="anchor-link" href="#Our-first-&quot;learning&quot;-model"> </a></h2><blockquote><p>It's nice that our persons can say their names.  However, to make them psychologically more interesting, let's allow them to make choices:</p>
+</blockquote>
 
 </div>
 </div>
@@ -192,11 +143,12 @@ nb_path: "03_concrete_modelling.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">RandomModel</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;This model generates choice probabilities which a person can use to make choices.&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">pass</span>
     
     <span class="k">def</span> <span class="nf">get_choice_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;A function that gives each action the same probability.&#39;&#39;&#39;</span>
         <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actions</span><span class="p">:</span>
             <span class="n">choice_probabilities</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
@@ -211,6 +163,14 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Let's make an "instance" of this model.  Although this model right now is not associated to any person, we can already test how it behaves:</p>
+</blockquote>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -248,7 +208,15 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's allow people to have learning models.</p>
+<p>It looks like it behaves as expected.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Let's make our Person blue print a bit more complex and allow people to have learning models.</p>
+</blockquote>
 
 </div>
 </div>
@@ -262,6 +230,7 @@ nb_path: "03_concrete_modelling.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
 <span class="k">def</span> <span class="nf">set_learning_model</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This function associates a person with a learning model.  It also tells the learning model which person it is associated to.&#39;&#39;&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span> <span class="o">=</span> <span class="n">model</span>
     <span class="n">model</span><span class="o">.</span><span class="n">person</span> <span class="o">=</span> <span class="bp">self</span>
 </pre></div>
@@ -280,8 +249,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span><span class="o">.</span><span class="n">set_learning_model</span><span class="p">(</span><span class="n">RandomModel</span><span class="p">())</span>
-<span class="nb">type</span><span class="p">(</span><span class="n">paul</span><span class="o">.</span><span class="n">learning_model</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adam</span><span class="o">.</span><span class="n">set_learning_model</span><span class="p">(</span><span class="n">RandomModel</span><span class="p">())</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">adam</span><span class="o">.</span><span class="n">learning_model</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -309,7 +278,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And to make choices based on these learning models.</p>
+<blockquote><p>We also allow them to make choices based on the model-calculated choice probabilities.</p>
+</blockquote>
 
 </div>
 </div>
@@ -323,7 +293,7 @@ nb_path: "03_concrete_modelling.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
 <span class="k">def</span> <span class="nf">choose_action</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">possible_actions</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Note: This only works for two actions&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;This function chooses an action based on model-calculated choice probabilities.&#39;&#39;&#39;</span>
     <span class="c1"># Getting choice probabilities from learning model</span>
     <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_model</span><span class="o">.</span><span class="n">get_choice_probabilities</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span>
     <span class="c1"># Chosing action based on choice probabilities</span>
@@ -351,7 +321,15 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Paul chooses an action.</p>
+<blockquote><p>Time to check whether people can use their learning models:</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Adam chooses an action.</p>
 
 </div>
 </div>
@@ -363,7 +341,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">paul</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adam</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -378,7 +356,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;a&#39;</pre>
+<pre>&#39;b&#39;</pre>
 </div>
 
 </div>
@@ -391,7 +369,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Does Paul choose randomely?</p>
+<p>Does Adam choose randomely?</p>
 
 </div>
 </div>
@@ -403,7 +381,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">paul</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">adam</span><span class="o">.</span><span class="n">choose_action</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="c1"># Making a 1000 choices and getting the average time Adam choses &quot;a&quot;</span>
 </pre></div>
 
     </div>
@@ -418,7 +396,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.55</pre>
+<pre>0.49</pre>
 </div>
 
 </div>
@@ -438,7 +416,9 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="A-more-complicated-model">A more complicated model<a class="anchor-link" href="#A-more-complicated-model"> </a></h2><h3 id="RescorlaWagnerModel">RescorlaWagnerModel<a class="anchor-link" href="#RescorlaWagnerModel"> </a></h3>
+<h2 id="A-more-complicated-model">A more complicated model<a class="anchor-link" href="#A-more-complicated-model"> </a></h2><p>Now that we created a person that can use a (pretty simple) learning model, we can try to create a more complicated model.</p>
+<h3 id="RescorlaWagnerModel">RescorlaWagnerModel<a class="anchor-link" href="#RescorlaWagnerModel"> </a></h3><p>The Rescorla Wagner Model can learn from experience.</p>
+
 </div>
 </div>
 </div>
@@ -483,8 +463,15 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>A Rescorla-Wagner Model associates each action with an expected reward.  If it has not encountered a possible action, it assignes .5 to it (Note:Again this only seems to work for two actions).</p>
+<blockquote><p>A Rescorla-Wagner Model associates each action with an expected reward.  If it has not encountered a possible action, it assignes .5 to it.</p>
 </blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>{% include warning.html content='This function only seems to work for two actions.' %}</p>
 
 </div>
 </div>
@@ -512,6 +499,14 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Let's test our model, so far:</p>
+</blockquote>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The model starts with no knowledge of the world.</p>
@@ -634,7 +629,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's write a function that can consider several actions at once:</p>
+<blockquote><p>So far the model only considers one action at a time.  For convenience, we add a function that can process several actions at once.</p>
+</blockquote>
 
 </div>
 </div>
@@ -729,7 +725,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on the expected rewards, we can write the models choice function.</p>
+<blockquote><p>Now that our model can associate expected rewards with actions, we write a function that translates these expected rewards to choice probabilities:</p>
+</blockquote>
 
 </div>
 </div>
@@ -743,10 +740,13 @@ nb_path: "03_concrete_modelling.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
 <span class="k">def</span> <span class="nf">get_choice_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+    <span class="c1"># Turning the expected reward dictionary into an array we can use in mathematical functions</span>
     <span class="n">expected_rewards</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expected_rewards_for_possible_actions</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
     <span class="n">expected_reward_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">expected_rewards</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="c1"># Calculating the probabilities</span>
     <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">expected_reward_values</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">expected_reward_values</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">))</span>
-    <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span><span class="n">choice_probabilities</span><span class="p">))</span> <span class="c1"># turning them into a dictionary</span>
+    <span class="c1"># Turning it back into a dictionary</span>
+    <span class="n">choice_probabilities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span><span class="n">choice_probabilities</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">choice_probabilities</span>
 </pre></div>
 
@@ -792,7 +792,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now a person with a Rescorla Wagner Model should already be able to choose things.</p>
+<blockquote><p>Now that our model can generate choice probabilities, people can use it to make choices:</p>
+</blockquote>
 
 </div>
 </div>
@@ -804,7 +805,7 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Richard&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">richard</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Richard&#39;</span><span class="p">)</span> <span class="c1"># a new person</span>
 <span class="n">richard</span><span class="o">.</span><span class="n">set_learning_model</span><span class="p">(</span><span class="n">RescorlaWagnerModel</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mi">4</span><span class="p">))</span>
 </pre></div>
 
@@ -850,14 +851,16 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point the Rescorla Wagner Model acts the same as the random model.  This is because we have not given it the ability to learn (update it's expected reward values).  Therefore the values stay at their initial value .5.</p>
+<blockquote><p>At this point the Rescorla Wagner Model acts the same as the random model.  This is because we have not given it the ability to learn (update it's expected reward values).  Therefore the values stay at their initial value .5.</p>
+</blockquote>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's give the model the chance to learn by associating actions with rewards.</p>
+<blockquote><p>Let's give the model the chance to learn by associating actions with rewards.</p>
+</blockquote>
 
 </div>
 </div>
@@ -879,6 +882,7 @@ nb_path: "03_concrete_modelling.ipynb"
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
 <span class="k">def</span> <span class="nf">learn</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">RescorlaWagnerModel</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">prediction_error</span> <span class="o">=</span> <span class="n">reward</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expected_reward_for_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+    <span class="c1"># You might know the line below as Q_a = Q_a + alhpa * delta </span>
     <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_reward_memory</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction_error</span>
 </pre></div>
 
@@ -974,7 +978,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For learning to occur, of course, the participant has to remember her last action (at least until receiving a reward):</p>
+<blockquote><p>For learning to occur, of course, participants have to remember their last action (at least until receiving a reward):</p>
+</blockquote>
 
 </div>
 </div>
@@ -988,7 +993,9 @@ nb_path: "03_concrete_modelling.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@patch</span>
 <span class="k">def</span> <span class="nf">choose_and_remember_action</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Person</span><span class="p">,</span> <span class="n">possible_actions</span><span class="p">):</span>
+    <span class="c1"># Choosing an action</span>
     <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose_action</span><span class="p">(</span><span class="n">possible_actions</span><span class="p">)</span>
+    <span class="c1"># And remembering it </span>
     <span class="bp">self</span><span class="o">.</span><span class="n">last_action</span> <span class="o">=</span> <span class="n">action</span>
     <span class="k">return</span> <span class="n">action</span>
 </pre></div>
@@ -1068,7 +1075,8 @@ nb_path: "03_concrete_modelling.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now when the person gets rewarded, the model can learn.</p>
+<blockquote><p>Now, we write one more function that allows participants to receive rewards and consequently learn using their learning model:</p>
+</blockquote>
 
 </div>
 </div>
@@ -1092,6 +1100,21 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p>Let's test it:</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We give Richard a reward for his last action.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1109,6 +1132,13 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>His expected rewards get updated.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1175,6 +1205,13 @@ nb_path: "03_concrete_modelling.ipynb"
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's reward him 100000 times for his latest action.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
