@@ -17,8 +17,8 @@ def choose(p):
     return chosen_action
 
 # Cell
-def simulate_M3RescorlaWagner_v1(T, mu, alpha, beta):
-    Q = np.array([0.5, 0.5]) # Q are the Q-values the participant currently holds for each action
+def simulate_M3RescorlaWagner_v1(T, mu, alpha, beta, starting_q_values = [.5, .5]):
+    Q = np.array(starting_q_values) # Q are the Q-values the participant currently holds for each action
     Qs = []
     deltas = []
     actions = [] # the participants actions
@@ -33,7 +33,10 @@ def simulate_M3RescorlaWagner_v1(T, mu, alpha, beta):
         rewards.append(int(reward))
         delta = reward - Q[action] # prediction error
         deltas.append(delta)
+        Q = list(Q)
         Q[action] = Q[action] + alpha * delta
+        Q = np.array(Q)
+
     return actions, rewards, Qs, deltas
 
 

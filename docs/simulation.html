@@ -278,7 +278,7 @@ Q(a(t)) = Q(a(t)) + alpha * delta;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="simulate_M3RescorlaWagner_v1" class="doc_header"><code>simulate_M3RescorlaWagner_v1</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>simulate_M3RescorlaWagner_v1</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>)</p>
+<h4 id="simulate_M3RescorlaWagner_v1" class="doc_header"><code>simulate_M3RescorlaWagner_v1</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>simulate_M3RescorlaWagner_v1</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>, <strong><code>starting_q_values</code></strong>=<em><code>[0.5, 0.5]</code></em>)</p>
 </blockquote>
 
 </div>
@@ -312,10 +312,36 @@ Q(a(t)) = Q(a(t)) + alpha * delta;
 <span class="n">alpha</span> <span class="o">=</span> <span class="mf">.2</span> <span class="c1"># learning rate</span>
 <span class="n">beta</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># inverse temperature</span>
 
-<span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">Qs</span><span class="p">,</span> <span class="n">deltas</span> <span class="o">=</span> <span class="n">simulate_M3RescorlaWagner_v1</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+<span class="n">actions</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">Qs</span><span class="p">,</span> <span class="n">deltas</span> <span class="o">=</span> <span class="n">simulate_M3RescorlaWagner_v1</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">starting_q_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">Qs</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[array([0, 0]),
+ array([0. , 0.2]),
+ array([0.  , 0.36]),
+ array([0.   , 0.488]),
+ array([0.    , 0.5904]),
+ array([0.     , 0.67232]),
+ array([0.      , 0.537856]),
+ array([0.       , 0.6302848]),
+ array([0.        , 0.50422784]),
+ array([0.        , 0.50422784])]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -357,7 +383,7 @@ Q(a(t)) = Q(a(t)) + alpha * delta;
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="plot_rescorla_game" class="doc_header"><code>plot_rescorla_game</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_rescorla_game</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>)</p>
+<h4 id="plot_rescorla_game" class="doc_header"><code>plot_rescorla_game</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_rescorla_game</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -632,7 +658,7 @@ height=469
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="simulate_M4ChoiceKernel_v1" class="doc_header"><code>simulate_M4ChoiceKernel_v1</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L59" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>simulate_M4ChoiceKernel_v1</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha_c</code></strong>, <strong><code>beta_c</code></strong>)</p>
+<h4 id="simulate_M4ChoiceKernel_v1" class="doc_header"><code>simulate_M4ChoiceKernel_v1</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L62" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>simulate_M4ChoiceKernel_v1</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha_c</code></strong>, <strong><code>beta_c</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -671,7 +697,7 @@ height=469
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="plot_choice_kernel_game" class="doc_header"><code>plot_choice_kernel_game</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_choice_kernel_game</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>)</p>
+<h4 id="plot_choice_kernel_game" class="doc_header"><code>plot_choice_kernel_game</code><a href="https://github.com/hgzech/simulation_workshop/tree/master/simulation_workshop/simulation.py#L81" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>plot_choice_kernel_game</code>(<strong><code>T</code></strong>, <strong><code>mu</code></strong>, <strong><code>alpha</code></strong>, <strong><code>beta</code></strong>)</p>
 </blockquote>
 
 </div>
