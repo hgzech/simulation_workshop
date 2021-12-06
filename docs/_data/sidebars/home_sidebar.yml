@@ -21,6 +21,9 @@ entries:
     - output: web,pdf
       title: A more concrete simulation
       url: concrete_modelling.html
+    - output: web,pdf
+      title: 'Interactive session '
+      url: interactive_session.html
     output: web
     title: simulation_workshop
   output: web

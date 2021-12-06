@@ -4,6 +4,7 @@
     "Core": "core.html",
     "Simulating an experiment": "simulation.html",
     "Wilson Figure": "wilson_figure.html",
-    "A more concrete simulation": "concrete_modelling.html"
+    "A more concrete simulation": "concrete_modelling.html",
+    "Interactive session ": "interactive_session.html"
   }
 }
